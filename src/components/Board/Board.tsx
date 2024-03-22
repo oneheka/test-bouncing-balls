@@ -42,7 +42,7 @@ export class Board extends Component<{}, { ref: any, showModal: boolean, x: numb
 
         const ctx = canvas.getContext('2d')
 
-        if(this.state.isStart) {
+        if(this.state.isStart && this.state.x !== -1 && this.state.y !== -1) {
             ctx.save()
             ctx.beginPath()
             ctx.lineWidth = 5
