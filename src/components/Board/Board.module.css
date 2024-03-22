@@ -1,0 +1,5 @@
+.board {
+    border-radius: 8px;
+    outline: 3px solid #010101;
+    outline-offset: -3px;
+}
