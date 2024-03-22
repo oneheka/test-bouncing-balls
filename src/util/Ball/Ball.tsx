@@ -29,7 +29,8 @@ export default class Ball {
             size?: number,
             color?: BallColor,
             width: number,
-            height: number
+            height: number,
+            id: number
         }
     ) {
         if(!options?.size) {
@@ -55,7 +56,9 @@ export default class Ball {
     }
 
     isClick(x: number, y: number) {
-        return x > this.x && y > this.y && this.x+this.options.size! > x && this.y+this.options.size! * 2 > y
+        const circleX = this.x - (this.options.size! / 2)
+        const circleY = this.y - (this.options.size! / 2)
+        return x > circleX && y > circleY && circleX+this.options.size! > x && circleY+this.options.size! * 2 > y
     }
 
     async click(canvas: any , balls: Ball[], data: { isX: boolean, isY: boolean } = { isX: this.isX, isY: this.isY }, updateCanvas: () => any) {
@@ -95,7 +98,7 @@ export default class Ball {
 
             this.draw(ctx)
 
-            const bls = balls.filter((b) => b.isClick(this.x, this.y))
+            const bls = balls.filter((b) => b.isClick(this.x, this.y) && b.options.id !== this.options.id)
             if(bls.length > 0) {
                 this.isX = !this.isX
                 this.isY = !this.isY
@@ -105,7 +108,7 @@ export default class Ball {
             }
 
             checked = 20 / force * i
-            if(updateCanvas) updateCanvas()
+            updateCanvas()
             await new Promise((r) => setTimeout(() => r(''), checked))
         }
 

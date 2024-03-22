@@ -10,7 +10,7 @@ export class Board extends Component<{}, { ref: any, showModal: boolean, x: numb
     private readonly height: number = 520
 
     balls = new Array(10).fill(null).map(
-        () => new Ball({ width: this.width, height: this.height })
+        (_, i) => new Ball({ width: this.width, height: this.height, id: i })
     ) as Ball[]
 
     render() {
@@ -63,7 +63,7 @@ export class Board extends Component<{}, { ref: any, showModal: boolean, x: numb
         const y = Math.round((e.clientY - positions.top) * (this.height / positions.height))
 
         const find = this.balls.findIndex((b) => b.isClick(x, y))
-        if(find !== -1) {
+        if(find !== -1 && !this.balls[find].isClicked) {
             this.setState({ isStart: true, ballId: find, startX: x, startY: y })
             return this.updateCanvas()
         }
